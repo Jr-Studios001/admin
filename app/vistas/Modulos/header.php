@@ -4,7 +4,7 @@
       <a href="#" class="logo d-flex align-items-center">
         <img src="app/vistas/assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">LogicSoftware</span>
-        <a href="app/vistas/Modulos/log-out.php">Cerrar sesión</a>
+        
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
