@@ -29,9 +29,10 @@
                       <div class="invalid-feedback">Por favor entra tu contraseña!</div>
                     </div>
 
+                    <form class="row g-3 needs-validation" action= "index.php?route=inicio.sesion&action=verify"  method="post" novalidate></form> 
                     <?php 
                     require_once "app/controladores/login.controller.php";
-                    LoginController::ctrVerifyUser(); 
+                    
                     ?>
 
                     <div class="col-12">
@@ -40,6 +41,7 @@
                         <label class="form-check-label" for="rememberMe">Recuerdame</label>
                       </div>
                     </div>
+                    
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Ingresar</button>
                     </div>

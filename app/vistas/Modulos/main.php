@@ -13,13 +13,19 @@
       <div class="row">
         <div class="" >
           <div class="pagetitle">
-            <div class="breadcrumb">
+            <div class="">
               <div class="breadcrumb-item active">
                 <?php
-                echo"<h1>bienvenido de nuevo "  . $_SESSION["usuario"]["nombre"] ."</h1>";
-                //if (isset($_SESSION["usuario"])) {
-                  //echo"bienvenido de nuevo "  . $_SESSION["usuario"]["nombre"];
-                //}
+                if (isset($_GET["route"])) {
+                $allowedRoutes = ["home", "user", "otros","roles",];
+                if (in_array($_GET["route"], $allowedRoutes)) {
+                    include "app/vistas/modulos/".$_GET["route"].".php";
+                } else {
+                    include "app/vistas/modulos/404.php";
+                  }
+                } else {
+                  include "app/vistas/modulos/home.php";
+                  } 
                 ?>
               </div>
               

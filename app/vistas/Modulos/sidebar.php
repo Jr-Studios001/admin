@@ -4,11 +4,31 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="home">
+          <i class="bi bi-person-plus"></i>
+          <span>Inicio</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="user">
           <i class="bi bi-person-plus"></i>
           <span>Usuarios</span>
         </a>
-        <a class="nav-link " href="app/vistas/Modulos/log-out.php">
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="roles">
+          <i class="bi bi-person-plus"></i>
+          <span>Roles</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="otros">
+          <i class="bi bi-grid"></i>
+          <span>Otros</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="index.php?route=exit">
           <i class="bi bi-grid"></i>
           <span>Cerrar Sesion</span>
         </a>

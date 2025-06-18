@@ -49,6 +49,7 @@ if (isset($_SESSION["usuario"])) {
     include "app/vistas/modulos/header.php";
     include "app/vistas/modulos/main.php";
     include "app/vistas/modulos/footer.php";
+    //include "app/vistas/Modulos/user.php";
 } else {
     // Usuario no autenticado, mostramos el formulario de inicio de sesión
     include "app/vistas/modulos/inicio.sesion.php";
@@ -56,7 +57,7 @@ if (isset($_SESSION["usuario"])) {
     // Si el formulario fue enviado, intentamos hacer login
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!LoginController::ctrVerifyUser()) {
-            echo "<p style='color:red;'>Credenciales incorrectas</p>";
+            echo "INTENTE DE NUEVO";
         } else {
             // Redirigimos al index para refrescar la vista con sesión iniciada
             header("Location: index.php");
