@@ -22,7 +22,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="otros">
+        <a class="nav-link " href="registrate">
           <i class="bi bi-grid"></i>
           <span>Otros</span>
         </a>

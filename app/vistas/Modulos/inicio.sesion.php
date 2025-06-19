@@ -34,7 +34,6 @@
                     require_once "app/controladores/login.controller.php";
                     
                     ?>
-
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
@@ -46,7 +45,7 @@
                       <button class="btn btn-primary w-100" type="submit">Ingresar</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">No tienes una cuenta? <a href="pages-register.html">Crea una cuenta</a></p>
+                      <p class="small mb-0">No tienes una cuenta? <a href="index.php?r=registro">Crea una cuenta</a></p>
                     </div>
                   </form>
 

@@ -15,18 +15,6 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Correo</label>
-                  <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" id="inputEmail">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
-                  <div class="col-sm-10">
-                    <input type="password" name="password" class="form-control" id="inputPassword">
-                  </div>
-                </div>
-                <div class="row mb-3">
                   <label for="inputPassword" class="col-sm-2 col-form-label">Rol del usuario</label>
                   <div class="col-sm-10">
                     <input type="password" name="password" class="form-control" id="inputPassword">

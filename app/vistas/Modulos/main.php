@@ -17,7 +17,7 @@
               <div class="breadcrumb-item active">
                 <?php
                 if (isset($_GET["route"])) {
-                $allowedRoutes = ["home", "user", "otros","roles",];
+                $allowedRoutes = ["home", "user", "otros","roles","registrate"];
                 if (in_array($_GET["route"], $allowedRoutes)) {
                     include "app/vistas/modulos/".$_GET["route"].".php";
                 } else {

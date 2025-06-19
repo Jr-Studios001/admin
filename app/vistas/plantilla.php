@@ -39,35 +39,74 @@
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-    <?php
-    session_start();
+<?php
+session_start();
 
-// Verificamos si el usuario ya está logueado
+// ✅ Incluir el controlador de login
+require_once "app/controladores/login.controller.php";
+
+// ✅ Procesar formularios ANTES de enviar HTML
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Registro de usuario
+    if (isset($_POST["registro_nombre"])) {
+        echo "Se está ejecutando el registro...";
+        $respuesta = LoginController::ctrRegistrarUsuario();
+        if ($respuesta === "ok") {
+            $_SESSION["registro_ok"] = "Registro exitoso. Ahora puedes iniciar sesión.";
+        } else {
+            $_SESSION["registro_error"] = "Hubo un problema al registrar el usuario.";
+        }
+        header("Location: index.php");
+        exit();
+    }
+
+    // Login de usuario
+    if (LoginController::ctrVerifyUser()) {
+        header("Location: index.php");
+        exit();
+    } else {
+        $_SESSION["login_error"] = "Credenciales incorrectas.";
+        header("Location: index.php");
+        exit();
+    }
+}
+
+// ✅ Mostrar contenido según si está logueado
 if (isset($_SESSION["usuario"])) {
-    // Usuario autenticado, mostramos el contenido principal
     include "app/vistas/modulos/sidebar.php";
     include "app/vistas/modulos/header.php";
     include "app/vistas/modulos/main.php";
     include "app/vistas/modulos/footer.php";
-    //include "app/vistas/Modulos/user.php";
-} else {
-    // Usuario no autenticado, mostramos el formulario de inicio de sesión
-    include "app/vistas/modulos/inicio.sesion.php";
 
-    // Si el formulario fue enviado, intentamos hacer login
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!LoginController::ctrVerifyUser()) {
-            echo "INTENTE DE NUEVO";
-        } else {
-            // Redirigimos al index para refrescar la vista con sesión iniciada
-            header("Location: index.php");
-            exit();
+} else {
+
+    // 👇 Si viene de ?r=registro, mostrar solo el formulario de registro
+    if (isset($_GET["r"]) && $_GET["r"] === "registro") {
+        include "app/vistas/modulos/registrate.php";
+
+        // Mostrar mensaje de registro si existe
+        if (isset($_SESSION["registro_error"])) {
+            echo "<p style='color:red'>" . $_SESSION["registro_error"] . "</p>";
+            unset($_SESSION["registro_error"]);
+        }
+        if (isset($_SESSION["registro_ok"])) {
+            echo "<p style='color:green'>" . $_SESSION["registro_ok"] . "</p>";
+            unset($_SESSION["registro_ok"]);
+        }
+
+    } else {
+        // Si no pidió registro, mostrar login
+        include "app/vistas/modulos/inicio.sesion.php";
+
+        if (isset($_SESSION["login_error"])) {
+            echo "<p style='color:red'>" . $_SESSION["login_error"] . "</p>";
+            unset($_SESSION["login_error"]);
         }
     }
 }
-    
-    
-    ?>
+?>
+
+
   <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
