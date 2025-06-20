@@ -21,10 +21,12 @@ class LoginController {
         return false;
     }
 
+    
     static public function ctrVerifyUser() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
         if (isset($_POST["email"]) && isset($_POST["password"])) {
             $email = $_POST["email"];
             $password = $_POST["password"];
@@ -36,16 +38,36 @@ class LoginController {
 
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($usuario && $password === $usuario["password"]) {
-                // Guardamos el login en la sesión
+            if ($usuario && password_verify($password, $usuario["password"])) {
+
+                // 🔽 Cargar el rol del usuario
+                $stmtRol = $pdo->prepare("
+                    SELECT r.nombre_rol 
+                    FROM usuario_roles ur
+                    JOIN roles r ON r.id = ur.rol_id
+                    WHERE ur.usuario_id = :usuario_id
+                    LIMIT 1
+                ");
+                $stmtRol->bindParam(":usuario_id", $usuario["id"], PDO::PARAM_INT);
+                $stmtRol->execute();
+
+                $rol = $stmtRol->fetchColumn();
+
+                // Si no tiene rol, establecer uno por defecto
+                if (!$rol) {
+                    $rol = "sin rol";
+                }
+
+                // Agregar el rol a la sesión
+                $usuario["rol"] = $rol;
                 $_SESSION["usuario"] = $usuario;
+
                 return true;
-            } else {
-                return false;
             }
         }
 
         return false;
     }
+
 }
 ?>

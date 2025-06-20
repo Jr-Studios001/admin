@@ -20,13 +20,14 @@ class LoginModel {
 
     public static function mdlRegistrarUsuario($datos) {
         try {
-            $conexion = new PDO("mysql:host=localhost;dbname=tu_base", "root", ""); // ⚠️ Ajusta esto
+            $conexion = new PDO("mysql:host=localhost;dbname=prueba_db", "root", ""); // ⚠️ Ajusta esto
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, email, password) VALUES (:nombre, :email, :password)");
             $stmt->bindParam(":nombre", $datos["nombre"]);
             $stmt->bindParam(":email", $datos["email"]);
             $stmt->bindParam(":password", $datos["password"]);
+
 
             if ($stmt->execute()) {
                 return "ok";

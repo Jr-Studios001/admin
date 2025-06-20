@@ -44,6 +44,7 @@ session_start();
 
 // ✅ Incluir el controlador de login
 require_once "app/controladores/login.controller.php";
+require_once "app/controladores/rol.controller.php";
 
 // ✅ Procesar formularios ANTES de enviar HTML
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -59,6 +60,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit();
     }
+
+    if (isset($_GET["r"]) && $_GET["r"] === "asignarRol" && $_SERVER["REQUEST_METHOD"] === "POST") {
+    $usuario_id = $_POST["usuario_id"];
+    $rol_id = $_POST["rol_id"];
+
+    $respuesta = RolController::ctrAsignarRol($usuario_id, $rol_id);
+
+    if ($respuesta === "ok") {
+        $_SESSION["mensaje_rol"] = "Rol asignado correctamente.";
+    } else {
+        $_SESSION["mensaje_rol"] = "Error al asignar el rol.";
+    }
+    // 🔄 Actualizar el rol en la sesión si es el usuario actual
+    if (isset($_SESSION["usuario"]) && $_SESSION["usuario"]["id"] == $usuario_id) {
+        $stmtRol = $pdo->prepare("
+            SELECT r.nombre_rol 
+            FROM usuario_roles ur
+            JOIN roles r ON r.id = ur.rol_id
+            WHERE ur.usuario_id = :usuario_id
+            LIMIT 1
+        ");
+        $stmtRol->bindParam(":usuario_id", $usuario_id, PDO::PARAM_INT);
+        $stmtRol->execute();
+
+        $nuevoRol = $stmtRol->fetchColumn();
+        $_SESSION["usuario"]["rol"] = $nuevoRol ?: "sin rol";
+    }
+
+    header("Location: index.php?r=roles");
+    exit();
+}
 
     // Login de usuario
     if (LoginController::ctrVerifyUser()) {
@@ -104,6 +136,7 @@ if (isset($_SESSION["usuario"])) {
         }
     }
 }
+
 ?>
 
 
